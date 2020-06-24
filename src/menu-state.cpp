@@ -13,11 +13,10 @@ MenuState::MenuState(sf::RenderWindow & window, TextureHolder & textures, FontHo
   window_{ window },
   textures_{ textures },
   fonts_{ fonts },
-  bg_{ }
+  menu_{ fonts }
 { 
   try {
-    bg_.setTexture(textures.getOrLoad(Textures::Background, "data/textures/forest-background.png"));
-    bg_.setScale(0.5f, 0.5f);
+    menu_.setBackground(textures.getOrLoad(Textures::Background, "data/textures/forest-background.png"));
   } catch (std::runtime_error & exc) {
     std::cerr << exc.what() << '\n';
   }
@@ -37,7 +36,7 @@ void MenuState::render()
 {
   window_.clear();
 
-  window_.draw(bg_);
+  menu_.render(window_);
 
   window_.display();
 }

@@ -29,6 +29,12 @@ Game::Game() :
   } catch (std::runtime_error & exc) {
     std::cerr << exc.what() << '\n';
   }
+
+  try {
+    fonts_.load(Fonts::Primary, "data/fonts/primary.ttf");
+  } catch (std::runtime_error & exc) {
+    std::cerr << exc.what() << '\n';
+  }
 }
 
 void Game::run()

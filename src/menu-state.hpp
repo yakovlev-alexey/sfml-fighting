@@ -4,8 +4,8 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
+#include "menu.hpp"
 #include "state.hpp"
-#include "background.hpp"
 #include "resource-declarations.hpp"
 
 namespace sf
@@ -29,7 +29,7 @@ private:
   sf::RenderWindow & window_;
   TextureHolder & textures_;
   FontHolder & fonts_;  
-  sf::Sprite bg_;
+  Menu menu_;
 };
 
 

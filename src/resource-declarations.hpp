@@ -11,7 +11,9 @@ namespace Textures
 {
   enum ID
   {
-    Background
+    Background,
+    Button,
+    ActiveButton
   };
 }
 

@@ -13,14 +13,8 @@ MenuState::MenuState(sf::RenderWindow & window, TextureHolder & textures, FontHo
   window_{ window },
   textures_{ textures },
   fonts_{ fonts },
-  menu_{ fonts }
-{ 
-  try {
-    menu_.setBackground(textures.getOrLoad(Textures::Background, "data/textures/forest-background.png"));
-  } catch (std::runtime_error & exc) {
-    std::cerr << exc.what() << '\n';
-  }
-}
+  menu_{ textures, fonts }
+{ }
 
 bool MenuState::update()
 {

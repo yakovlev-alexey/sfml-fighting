@@ -15,7 +15,7 @@ objects := $(patsubst $(SDIR)/%.cpp,$(ODIR)/%.o, $(call sources))
 
 all: clean $(ODIR) $(call objects) link
 
-run: all
+run: $(call objects) link
 	./$(TARGET)
 
 .PHONY: $(ODIR) $(DISTDIR)

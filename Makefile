@@ -1,9 +1,13 @@
 CC = g++
-SDIR = src
-ODIR = out
-TARGET = sfml-app
 CPPFLAGS = -Wall -Wextra -Werror -Wno-missing-field-initializers -Wold-style-cast -std=gnu++14
 SFMLFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+
+SDIR = src
+ODIR = out
+DATADIR = data
+DISTDIR = dist
+
+TARGET = sfml-app
 
 sources := $(wildcard $(SDIR)/*/*.cpp $(SDIR)/*.cpp)
 objects := $(patsubst $(SDIR)/%.cpp,$(ODIR)/%.o, $(call sources))
@@ -13,7 +17,13 @@ all: clean $(ODIR) $(call objects) link
 run: all
 	./$(TARGET)
 
-.PHONY: $(ODIR)
+.PHONY: $(ODIR) $(DISTDIR)
+
+$(DISTDIR): all
+	rm -rf -f $(DISTDIR)
+	mkdir $(DISTDIR)
+	cp -r $(DATADIR) $(DISTDIR)
+	cp $(TARGET) $(DISTDIR)
 
 $(ODIR):
 	@mkdir $(ODIR)

@@ -26,7 +26,7 @@ namespace Fonts
 template <typename I, typename R>
 class ResourceHolder;
 
-typedef ResourceHolder<sf::Texture, Textures::ID> TextureHolder;
-typedef ResourceHolder<sf::Font, Fonts::ID>       FontHolder;
+typedef ResourceHolder<Textures::ID, sf::Texture> TextureHolder;
+typedef ResourceHolder<Fonts::ID, sf::Font>       FontHolder;
 
 #endif

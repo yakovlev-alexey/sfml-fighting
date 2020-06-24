@@ -1,16 +1,21 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
-#include <SFML/System/Time.hpp>
-#include <SFML/Graphics.hpp>
+#include <memory>
 
+#include <SFML/System/Time.hpp>
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+
+#include "state.hpp"
 #include "resource-holder.hpp"
 #include "resource-declarations.hpp"
 
 class Game
 {
 public:
-  Game(unsigned int windowWidth = 800u, unsigned int windowHeight = 600u);
+  Game();
   void run();
 private:
 
@@ -22,8 +27,10 @@ private:
 
   sf::RenderWindow window_;
 
-  TextureHolder texHolder_;
-  FontHolder fontHolder_;
+  TextureHolder textures_;
+  FontHolder fonts_;
+
+  std::unique_ptr<State> state_;
 
 };
 

@@ -1,10 +1,35 @@
 #include "game.hpp"
 
-Game::Game(unsigned int windowWidth, unsigned int windowHeight) :
-  window_{ sf::VideoMode{windowWidth, windowHeight}, "Game window", sf::Style::Close },
-  texHolder_{ },
-  fontHolder_{ }
-{ }
+#include <memory>
+#include <iostream>
+
+#include <SFML/System/Time.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/Event.hpp>
+
+#include "state.hpp"
+#include "menu-state.hpp"
+#include "resource-holder.hpp"
+#include "resource-declarations.hpp"
+
+namespace 
+{
+  const unsigned int WINDOW_WIDTH = 800u;
+  const unsigned int WINDOW_HEIGHT = 600u;
+}
+
+Game::Game() :
+  window_{ sf::VideoMode{WINDOW_WIDTH, WINDOW_HEIGHT}, "Game window", sf::Style::Close },
+  textures_{ },
+  fonts_{ },
+  state_{ std::make_unique<MenuState>(window_, textures_, fonts_) }
+{ 
+  try {
+    textures_.load(Textures::Background, "data/textures/forest-background.png");
+  } catch (std::runtime_error & exc) {
+    std::cerr << exc.what() << '\n';
+  }
+}
 
 void Game::run()
 {
@@ -18,7 +43,7 @@ void Game::run()
     sf::Time deltaTime = clock.restart();
     timeSinceLastUpdate += deltaTime;
 
-    // Every frame execute fixed updates (fixed time)
+    // Every frame start execute queued fixed updates (fixed time updates)
     while (timeSinceLastUpdate > FRAME_TIME) {
 
       timeSinceLastUpdate -= FRAME_TIME;
@@ -27,7 +52,7 @@ void Game::run()
       update(FRAME_TIME);
     }
 
-    // After fixed updates executed, render next frame
+    // After fixed updates are executed, render the next frame
     render();
   }
 }
@@ -49,10 +74,10 @@ void Game::processEvents()
 
 void Game::update(const sf::Time &)
 {
-
+  state_->update();
 }
 
 void Game::render()
 {
-
+  state_->render();
 }

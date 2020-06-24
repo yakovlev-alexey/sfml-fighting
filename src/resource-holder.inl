@@ -45,4 +45,6 @@ R & ResourceHolder<I, R>::getOrLoad(const I & id, const std::string & filename)
   }
 
   resources_.insert(std::make_pair(id, std::move(resource)));
+
+  return *resources_.find(id)->second;
 }

@@ -7,9 +7,10 @@ ODIR = out
 DATADIR = data
 DISTDIR = dist
 
-TARGET = sfml-app
+TARGET = $(ODIR)/sfml-app
 
-sources := $(wildcard $(SDIR)/*/*.cpp $(SDIR)/*.cpp)
+sources := $(wildcard $(SDIR)/**/*.cpp $(SDIR)/*.cpp)
+headers := $(wildcard $(SDIR)/**/*.hpp $(SDIR)/*.hpp)
 objects := $(patsubst $(SDIR)/%.cpp,$(ODIR)/%.o, $(call sources))
 
 all: clean $(ODIR) $(call objects) link

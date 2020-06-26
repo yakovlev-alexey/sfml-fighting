@@ -3,6 +3,7 @@ CPPFLAGS = -Wall -Wextra -Werror -Wno-missing-field-initializers -Wold-style-cas
 SFMLFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 SDIR = src
+IDIR = inc
 ODIR = out
 DATADIR = data
 DISTDIR = dist
@@ -10,15 +11,16 @@ DISTDIR = dist
 TARGET = $(ODIR)/sfml-app
 
 sources := $(wildcard $(SDIR)/**/*.cpp $(SDIR)/*.cpp)
-headers := $(wildcard $(SDIR)/**/*.hpp $(SDIR)/*.hpp)
 objects := $(patsubst $(SDIR)/%.cpp,$(ODIR)/%.o, $(call sources))
+
+uniq = $(if $1,$(firstword $1) $(call uniq,$(filter-out $(firstword $1),$1)))
+
+headers := $(foreach d,$(call uniq,$(dir $(call sources))), $(patsubst $(SDIR)/%, -I./$(IDIR)/%, $(d)))
 
 all: clean $(call objects) link
 
 run: $(call objects) link
 	./$(TARGET)
-
-.PHONY: $(DISTDIR)
 
 $(DISTDIR): all
 	rm -rf -f $(DISTDIR)
@@ -29,7 +31,7 @@ $(DISTDIR): all
 $(objects): $(ODIR)/%.o : $(SDIR)/%.cpp
 	@mkdir -p $(dir $@)
 	$(if $(SILENT),,@echo [C++] $<)
-	@$(CC) $(CPPFLAGS) -c $< -o $@ -O4
+	@$(CC) $(CPPFLAGS) $(call headers) -c $< -o $@ -O4
 
 link:
 	$(if $(SILENT),,@echo [LINK] $(call objects))
@@ -38,3 +40,5 @@ link:
 clean: 
 	rm -rf -f out
 	rm -f $(TARGET)
+
+.PHONY: all run $(DISTDIR) link clean

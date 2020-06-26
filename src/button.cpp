@@ -1,7 +1,5 @@
 #include "button.hpp"
 
-#include <iostream>
-
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Color.hpp>
@@ -16,21 +14,10 @@ GUI::Button::Button() :
   btn_{ },
   message_{ },
   selected_{ false },
+  callback_{ },
   btnTexture_{ nullptr },
   activeTexture_{ nullptr }
 { }
-
-GUI::Button::Button( sf::Font & font, const std::string & message) :
-  Transformable{ },
-  btn_{ },
-  message_{ message, font },
-  selected_{ false },
-  btnTexture_{ nullptr },
-  activeTexture_{ nullptr }
-{
-  updateBackground();
-  updateMessage();  
-}
 
 void GUI::Button::setTextures(sf::Texture & btnTexture, sf::Texture & activeTexture)
 {
@@ -59,6 +46,10 @@ void GUI::Button::setText(sf::Font & font, const std::string & message)
   updateMessage();
 }
 
+void GUI::Button::setCallback(const std::function<void()> & callback) {
+  callback_ = callback;
+}
+
 void GUI::Button::select()
 {
   selected_ = true;
@@ -76,7 +67,9 @@ void GUI::Button::deselect()
 
 void GUI::Button::activate()
 {
-  callback_();
+  if (callback_) {
+    callback_();
+  }
 }
 
 void GUI::Button::draw(sf::RenderTarget & target, sf::RenderStates states) const

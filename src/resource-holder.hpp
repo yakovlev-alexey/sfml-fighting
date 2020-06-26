@@ -6,8 +6,10 @@
 #include <memory>
 #include <stdexcept>
 
+#include <SFML/System/NonCopyable.hpp>
+
 template <typename I, typename R>
-class ResourceHolder
+class ResourceHolder : public sf::NonCopyable
 {
 public:
   void load(const I & id, const std::string & filename);

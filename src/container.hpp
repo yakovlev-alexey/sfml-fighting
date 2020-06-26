@@ -19,9 +19,11 @@ namespace GUI
   {
   public:
     Container();
+
     void add(std::unique_ptr<Button> & btn);
     void handleEvent(const sf::Event & event);
     void render(sf::RenderWindow & window) const;
+    
   private:
     size_t selected_;
     std::vector<std::unique_ptr<Button>> btns_;

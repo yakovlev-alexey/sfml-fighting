@@ -7,9 +7,13 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "game.hpp"
 #include "button.hpp"
 #include "container.hpp"
+#include "game-state.hpp"
+#include "state-manager.hpp"
 #include "resource-holder.hpp"
+#include "state-declarations.hpp"
 #include "resource-declarations.hpp"
 
 Menu::Menu(TextureHolder & textures, FontHolder & fonts) :
@@ -25,7 +29,14 @@ Menu::Menu(TextureHolder & textures, FontHolder & fonts) :
   }
 
   auto playBtn = std::make_unique<GUI::Button>();
+  playBtn->setCallback([]() {
+    StateManager::getInstance().queueChange(States::Game);
+  });
+
   auto exitBtn = std::make_unique<GUI::Button>();
+  exitBtn->setCallback([]() {
+    StateManager::getInstance().queueChange(States::Exit);
+  });
 
   logo_.setPosition(400, 50);
   playBtn->setPosition(400, 125);
@@ -33,7 +44,6 @@ Menu::Menu(TextureHolder & textures, FontHolder & fonts) :
   
   try {
     sf::Font & font = fonts.getOrLoad(Fonts::Primary, "data/fonts/primary.ttf");
-    logo_.setText(font, "FOREST BRAWL GAME");
     playBtn->setText(font, "Play");
     exitBtn->setText(font, "Exit");
   } catch (std::runtime_error & exc) {
@@ -52,6 +62,11 @@ Menu::Menu(TextureHolder & textures, FontHolder & fonts) :
   btnContainer_.add(playBtn);
   btnContainer_.add(exitBtn);
 
+}
+
+void Menu::handleEvent(const sf::Event & event)
+{
+  btnContainer_.handleEvent(event);
 }
 
 void Menu::render(sf::RenderWindow & window) const

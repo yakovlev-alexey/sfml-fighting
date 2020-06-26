@@ -27,7 +27,7 @@ void GUI::Container::add(std::unique_ptr<Button> & btn)
 
 void GUI::Container::handleEvent(const sf::Event & event)
 {
-  if (sf::Event::KeyReleased == 1) {
+  if (event.type == sf::Event::KeyReleased) {
     if ((selected_ < btns_.size() - 1) && ((event.key.code == sf::Keyboard::Down) || (event.key.code == sf::Keyboard::S))) {
       btns_[selected_]->deselect();
       btns_[++selected_]->select();

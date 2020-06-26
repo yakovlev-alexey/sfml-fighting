@@ -2,36 +2,39 @@
 
 #include <iostream>
 
-#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Time.hpp>
 #include <SFML/Window/Event.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 #include "state.hpp"
 #include "resource-holder.hpp"
 #include "resource-declarations.hpp"
 
-MenuState::MenuState(sf::RenderWindow & window, TextureHolder & textures, FontHolder & fonts) :
-  window_{ window },
-  textures_{ textures },
-  fonts_{ fonts },
-  menu_{ textures, fonts }
+MenuState::MenuState(const context_t & context) :
+  State{ context },
+  menu_{ context.textures, context.fonts }
 { }
 
-bool MenuState::update()
+void MenuState::handleEvent(const sf::Event & event)
 {
-  return true;
+  menu_.handleEvent(event);
 }
 
-bool MenuState::handleEvent(const sf::Event &)
+void MenuState::update(const sf::Time &)
 {
-  return true;
+
 }
 
-void MenuState::render()
+void MenuState::render() const
 {
-  window_.clear();
+  context_.window.clear();
 
-  menu_.render(window_);
+  menu_.render(context_.window);
 
-  window_.display();
+  context_.window.display();
 }
 
+States::ID MenuState::getStateId() const
+{
+  return States::Menu;
+}

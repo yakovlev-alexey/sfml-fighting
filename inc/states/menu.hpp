@@ -6,9 +6,9 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/NonCopyable.hpp>
 
-#include "../gui/button.hpp"
-#include "../gui/container.hpp"
-#include "../resource-declarations.hpp"
+#include <gui/button.hpp>
+#include <gui/container.hpp>
+#include <resource-declarations.hpp>
 
 namespace sf
 {

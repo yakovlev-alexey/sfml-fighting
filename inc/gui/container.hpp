@@ -4,7 +4,7 @@
 #include <vector>
 #include <memory>
 
-#include "button.hpp"
+#include <gui/button.hpp>
 
 namespace sf
 {

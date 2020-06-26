@@ -1,4 +1,4 @@
-#include "container.hpp"
+#include <gui/container.hpp>
 
 #include <memory>
 #include <vector>
@@ -7,7 +7,7 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "button.hpp"
+#include <gui/button.hpp>
 
 GUI::Container::Container() :
   selected_{ 0 },

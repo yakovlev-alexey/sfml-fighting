@@ -4,8 +4,8 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "state.hpp"
-#include "../resource-declarations.hpp"
+#include <states/state.hpp>
+#include <resource-declarations.hpp>
 
 namespace sf
 {

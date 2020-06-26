@@ -3,10 +3,11 @@
 
 #include <SFML/System/NonCopyable.hpp>
 
-#include "state.hpp"
-#include "state-declarations.hpp"
-#include "../resource-holder.hpp"
-#include "../resource-declarations.hpp"
+#include <states/state.hpp>
+#include <states/state-declarations.hpp>
+
+#include <resource-holder.hpp>
+#include <resource-declarations.hpp>
 
 namespace sf
 {

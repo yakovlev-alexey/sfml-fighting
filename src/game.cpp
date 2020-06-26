@@ -1,4 +1,4 @@
-#include "game.hpp"
+#include <game.hpp>
 
 #include <memory>
 #include <iostream>
@@ -7,10 +7,10 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 
-#include "states/state.hpp"
-#include "states/menu-state.hpp"
-#include "resource-holder.hpp"
-#include "resource-declarations.hpp"
+#include <states/state.hpp>
+#include <states/menu-state.hpp>
+#include <resource-holder.hpp>
+#include <resource-declarations.hpp>
 
 Game * Game::instance = nullptr;
 

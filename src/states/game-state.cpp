@@ -1,4 +1,4 @@
-#include "game-state.hpp"
+#include <states/game-state.hpp>
 
 #include <iostream>
 
@@ -6,9 +6,11 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "state.hpp"
-#include "../resource-holder.hpp"
-#include "../resource-declarations.hpp"
+#include <states/state.hpp>
+#include <states/state-declarations.hpp>
+
+#include <resource-holder.hpp>
+#include <resource-declarations.hpp>
 
 GameState::GameState(const context_t & context) :
   State{ context }

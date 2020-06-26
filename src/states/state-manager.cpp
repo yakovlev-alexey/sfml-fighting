@@ -1,14 +1,14 @@
-#include "state-manager.hpp"
+#include <states/state-manager.hpp>
 
 #include <stdexcept>
 
 #include <SFML/System/Time.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "state.hpp"
-#include "game-state.hpp"
-#include "menu-state.hpp"
-#include "../resource-holder.hpp"
+#include <states/state.hpp>
+#include <states/game-state.hpp>
+#include <states/menu-state.hpp>
+#include <resource-holder.hpp>
 
 StateManager * StateManager::instance = nullptr;
 

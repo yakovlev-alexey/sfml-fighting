@@ -1,4 +1,4 @@
-#include "menu-state.hpp"
+#include <states/menu-state.hpp>
 
 #include <iostream>
 
@@ -6,9 +6,9 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "state.hpp"
-#include "../resource-holder.hpp"
-#include "../resource-declarations.hpp"
+#include <states/state.hpp>
+#include <resource-holder.hpp>
+#include <resource-declarations.hpp>
 
 MenuState::MenuState(const context_t & context) :
   State{ context },

@@ -13,10 +13,6 @@ TARGET = $(ODIR)/sfml-app
 sources := $(wildcard $(SDIR)/**/*.cpp $(SDIR)/*.cpp)
 objects := $(patsubst $(SDIR)/%.cpp,$(ODIR)/%.o, $(call sources))
 
-uniq = $(if $1,$(firstword $1) $(call uniq,$(filter-out $(firstword $1),$1)))
-
-headers := $(foreach d,$(call uniq,$(dir $(call sources))), $(patsubst $(SDIR)/%, -I./$(IDIR)/%, $(d)))
-
 all: clean $(call objects) link
 
 run: $(call objects) link
@@ -31,7 +27,7 @@ $(DISTDIR): all
 $(objects): $(ODIR)/%.o : $(SDIR)/%.cpp
 	@mkdir -p $(dir $@)
 	$(if $(SILENT),,@echo [C++] $<)
-	@$(CC) $(CPPFLAGS) $(call headers) -c $< -o $@ -O4
+	@$(CC) $(CPPFLAGS) -I./$(IDIR) -c $< -o $@ -O4
 
 link:
 	$(if $(SILENT),,@echo [LINK] $(call objects))

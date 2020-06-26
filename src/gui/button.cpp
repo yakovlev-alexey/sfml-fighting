@@ -1,4 +1,4 @@
-#include "button.hpp"
+#include <gui/button.hpp>
 
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Text.hpp>

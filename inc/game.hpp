@@ -7,9 +7,9 @@
 #include <SFML/System/NonCopyable.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "states/state-manager.hpp"
-#include "resource-holder.hpp"
-#include "resource-declarations.hpp"
+#include <states/state-manager.hpp>
+#include <resource-holder.hpp>
+#include <resource-declarations.hpp>
 
 class Game : public sf::NonCopyable
 {

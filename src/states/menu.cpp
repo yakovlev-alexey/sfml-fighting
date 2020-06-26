@@ -7,14 +7,15 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "game.hpp"
-#include "button.hpp"
-#include "container.hpp"
 #include "game-state.hpp"
 #include "state-manager.hpp"
-#include "resource-holder.hpp"
 #include "state-declarations.hpp"
-#include "resource-declarations.hpp"
+
+#include "../gui/button.hpp"
+#include "../gui/container.hpp"
+
+#include "../resource-holder.hpp"
+#include "../resource-declarations.hpp"
 
 Menu::Menu(TextureHolder & textures, FontHolder & fonts) :
   logo_{ },

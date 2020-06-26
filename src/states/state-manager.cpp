@@ -8,7 +8,7 @@
 #include "state.hpp"
 #include "game-state.hpp"
 #include "menu-state.hpp"
-#include "resource-holder.hpp"
+#include "../resource-holder.hpp"
 
 StateManager * StateManager::instance = nullptr;
 

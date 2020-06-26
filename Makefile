@@ -13,12 +13,12 @@ sources := $(wildcard $(SDIR)/**/*.cpp $(SDIR)/*.cpp)
 headers := $(wildcard $(SDIR)/**/*.hpp $(SDIR)/*.hpp)
 objects := $(patsubst $(SDIR)/%.cpp,$(ODIR)/%.o, $(call sources))
 
-all: clean $(ODIR) $(call objects) link
+all: clean $(call objects) link
 
 run: $(call objects) link
 	./$(TARGET)
 
-.PHONY: $(ODIR) $(DISTDIR)
+.PHONY: $(DISTDIR)
 
 $(DISTDIR): all
 	rm -rf -f $(DISTDIR)
@@ -26,10 +26,8 @@ $(DISTDIR): all
 	cp -r $(DATADIR) $(DISTDIR)
 	cp $(TARGET) $(DISTDIR)
 
-$(ODIR):
-	@mkdir $(ODIR)
-
 $(objects): $(ODIR)/%.o : $(SDIR)/%.cpp
+	@mkdir -p $(dir $@)
 	$(if $(SILENT),,@echo [C++] $<)
 	@$(CC) $(CPPFLAGS) -c $< -o $@ -O4
 

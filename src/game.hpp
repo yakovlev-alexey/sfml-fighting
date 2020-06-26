@@ -7,7 +7,7 @@
 #include <SFML/System/NonCopyable.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "state-manager.hpp"
+#include "states/state-manager.hpp"
 #include "resource-holder.hpp"
 #include "resource-declarations.hpp"
 

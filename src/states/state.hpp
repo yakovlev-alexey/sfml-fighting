@@ -6,7 +6,8 @@
 #include <SFML/System/NonCopyable.hpp>
 
 #include "state-declarations.hpp"
-#include "resource-declarations.hpp"
+#include "../resource-declarations.hpp"
+
 namespace sf
 {
   class Time;

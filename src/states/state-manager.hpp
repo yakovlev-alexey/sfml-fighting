@@ -5,8 +5,8 @@
 
 #include "state.hpp"
 #include "state-declarations.hpp"
-#include "resource-holder.hpp"
-#include "resource-declarations.hpp"
+#include "../resource-holder.hpp"
+#include "../resource-declarations.hpp"
 
 namespace sf
 {

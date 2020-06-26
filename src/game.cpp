@@ -7,8 +7,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 
-#include "state.hpp"
-#include "menu-state.hpp"
+#include "states/state.hpp"
+#include "states/menu-state.hpp"
 #include "resource-holder.hpp"
 #include "resource-declarations.hpp"
 

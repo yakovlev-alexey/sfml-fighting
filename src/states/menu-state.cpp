@@ -7,8 +7,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "state.hpp"
-#include "resource-holder.hpp"
-#include "resource-declarations.hpp"
+#include "../resource-holder.hpp"
+#include "../resource-declarations.hpp"
 
 MenuState::MenuState(const context_t & context) :
   State{ context },

@@ -1,12 +1,13 @@
-#ifndef GAME_STATE_HPP
-#define GAME_STATE_HPP
+#ifndef MENU_STATE_HPP
+#define MENU_STATE_HPP
 
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "menu.hpp"
 #include "state.hpp"
-#include "resource-declarations.hpp"
+#include "state-declarations.hpp"
+#include "../resource-declarations.hpp"
 
 namespace sf
 {
@@ -14,10 +15,10 @@ namespace sf
   class RenderWindow;
 }
 
-class GameState : public State
+class MenuState : public State
 {
 public:
-  GameState(const context_t & context);
+  MenuState(const context_t & context);
 
   void handleEvent(const sf::Event & event) override;
   void update(const sf::Time & dt) override;
@@ -26,8 +27,7 @@ public:
   States::ID getStateId() const override;
 
 private:
-
-  // TODO
+  Menu menu_;
 };
 
 

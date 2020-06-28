@@ -5,6 +5,7 @@
 
 #include <states/state.hpp>
 #include <entities/player.hpp>
+#include <entities/opponent.hpp>
 
 namespace sf
 {
@@ -26,6 +27,7 @@ public:
   
 private:
 
+  void handlePhysics(Character & character) const;
   void handleCollisions(Character & character) const;
 
   static const float FLOOR_HEIGHT;
@@ -33,6 +35,7 @@ private:
   sf::Vector2u screenSize_;
 
   Player player_;
+  Opponent opponent_;
   sf::Sprite bg_;
 };
 

@@ -1,6 +1,8 @@
 #ifndef CHARACTER_HPP
 #define CHARACTER_HPP
 
+#include <list>
+
 #include <SFML/System/Clock.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Drawable.hpp>
@@ -34,18 +36,31 @@ public:
     Right
   };
 
+  enum class Action
+  {
+    None,
+    MoveLeft,
+    MoveRight,
+    Jump,
+    Attack
+  };
+
   Character();
+  virtual ~Character() = default;
 
   sf::FloatRect getBounds() const;
 
   State getState() const;
   void setState(State state);
 
+  bool getGrounded() const;
+  void setGrounded(bool grounded);
+
   void moveVelocity();
   void reset();
 
   virtual void handleEvent(const sf::Event & event) = 0;
-  virtual void update(const sf::Time & dt) = 0;
+  virtual void update(const sf::Time & dt);
   
 protected:
 
@@ -68,8 +83,12 @@ protected:
   sf::Sprite character_;
   sf::Vector2f velocity_;
 
+  std::list<Action> actions_;
+
   State state_;
   Direction direction_;
+
+  bool isGrounded_;
 
   struct {
     sf::Texture * idle;

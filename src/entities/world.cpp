@@ -11,11 +11,12 @@
 #include <entities/character.hpp>
 #include <resource-declarations.hpp>
 
-const float World::FLOOR_HEIGHT = 80.0f;
+const float World::FLOOR_HEIGHT = 50.0f;
 
 World::World(const State::context_t & context) :
   screenSize_{ context.window.getSize() },
   player_{ context.textures },
+  opponent_{ context.textures, player_ },
   bg_{ }
 {
   try {
@@ -24,27 +25,48 @@ World::World(const State::context_t & context) :
   } catch (std::runtime_error & exc) {
     std::cerr << exc.what() << '\n';
   }
+
+  player_.setPosition(screenSize_.x - 150.0f, screenSize_.y - 100.0f);
+  opponent_.setPosition(150.0f, screenSize_.y - 100.0f);
 }
 
 void World::handleEvent(const sf::Event & event)
 {
   player_.handleEvent(event);
+  opponent_.handleEvent(event);
 }
 
 void World::update(const sf::Time & dt)
 {
+  handlePhysics(player_);
+
+  handlePhysics(opponent_);
+
   player_.update(dt);
 
-  player_.moveVelocity();
+  opponent_.update(dt);
 
+  player_.moveVelocity();
   handleCollisions(player_);
 
+  opponent_.moveVelocity();
+  handleCollisions(opponent_);
 }
 
 void World::render(sf::RenderWindow & window) const
 {
   window.draw(bg_);
+  window.draw(opponent_);
   window.draw(player_);
+}
+
+void World::handlePhysics(Character & character) const
+{
+  sf::FloatRect bb = character.getBounds();
+
+  float groundedError = 5.0f;
+
+  character.setGrounded((bb.top + bb.height) > (screenSize_.y - FLOOR_HEIGHT - groundedError));
 }
 
 void World::handleCollisions(Character & character) const

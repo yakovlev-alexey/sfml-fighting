@@ -1,4 +1,4 @@
-#include <states/menu.hpp>
+#include <entities/menu.hpp>
 
 #include <memory>
 #include <iostream>

@@ -1,4 +1,4 @@
-#include <states/player.hpp>
+#include <entities/player.hpp>
 
 #include <cmath>
 #include <iostream>

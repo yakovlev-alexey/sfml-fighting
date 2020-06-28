@@ -1,4 +1,4 @@
-#include <states/world.hpp>
+#include <entities/world.hpp>
 
 #include <iostream>
 
@@ -8,7 +8,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include <resource-holder.hpp>
-#include <states/character.hpp>
+#include <entities/character.hpp>
 #include <resource-declarations.hpp>
 
 const float World::FLOOR_HEIGHT = 80.0f;

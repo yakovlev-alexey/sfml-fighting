@@ -4,7 +4,7 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
-#include <states/world.hpp>
+#include <entities/world.hpp>
 #include <states/state.hpp>
 #include <resource-declarations.hpp>
 

@@ -4,7 +4,7 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
-#include <states/menu.hpp>
+#include <entities/menu.hpp>
 #include <states/state.hpp>
 #include <states/state-declarations.hpp>
 #include <resource-declarations.hpp>

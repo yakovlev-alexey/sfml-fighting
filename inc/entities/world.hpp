@@ -4,7 +4,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include <states/state.hpp>
-#include <states/player.hpp>
+#include <entities/player.hpp>
 
 namespace sf
 {

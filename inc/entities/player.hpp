@@ -3,7 +3,7 @@
 
 #include <list>
 
-#include <states/character.hpp>
+#include <entities/character.hpp>
 #include <resource-declarations.hpp>
 
 namespace sf

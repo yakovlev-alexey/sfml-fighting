@@ -1,4 +1,4 @@
-#include <states/character.hpp>
+#include <entities/character.hpp>
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>

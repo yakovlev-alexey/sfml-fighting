@@ -52,8 +52,8 @@ Menu::Menu(TextureHolder & textures, FontHolder & fonts) :
   }
 
   try {
-    sf::Texture btnTexture = textures.getOrLoad(Textures::Button, "data/textures/btn.png");
-    sf::Texture activeTexture = textures.getOrLoad(Textures::ActiveButton, "data/textures/btn-active.png");
+    sf::Texture & btnTexture = textures.getOrLoad(Textures::Button, "data/textures/btn.png");
+    sf::Texture & activeTexture = textures.getOrLoad(Textures::ActiveButton, "data/textures/btn-active.png");
     playBtn->setTextures(btnTexture, activeTexture);
     exitBtn->setTextures(btnTexture, activeTexture);
   } catch (std::runtime_error & exc) {

@@ -13,7 +13,12 @@ namespace Textures
   {
     Background,
     Button,
-    ActiveButton
+    ActiveButton,
+    PlayerIdle,
+    PlayerMove,
+    PlayerJump,
+    PlayerAttack,
+    PlayerHit
   };
 }
 

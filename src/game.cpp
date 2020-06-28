@@ -44,6 +44,7 @@ Game::Game() :
     std::cerr << exc.what() << '\n';
   }
 
+  window_.setVerticalSyncEnabled(true);
 }
 
 Game::~Game()
@@ -60,17 +61,17 @@ void Game::run()
   // Main game loop
   while (window_.isOpen()) {
 
-    sf::Time deltaTime = clock.restart();
-    timeSinceLastUpdate += deltaTime;
+    // sf::Time deltaTime = clock.restart();
+    timeSinceLastUpdate = clock.restart();
 
     // Every frame start execute queued fixed updates (fixed time updates)
-    while (timeSinceLastUpdate > FRAME_TIME) {
+    // while (timeSinceLastUpdate > FRAME_TIME) {
 
-      timeSinceLastUpdate -= FRAME_TIME;
+    //   timeSinceLastUpdate -= FRAME_TIME;
 
-      processEvents();
-      update(FRAME_TIME);
-    }
+    processEvents();
+    update(timeSinceLastUpdate);
+    // }
 
     // After fixed updates are executed, render the next frame
     render();

@@ -13,22 +13,26 @@
 #include <resource-declarations.hpp>
 
 GameState::GameState(const context_t & context) :
-  State{ context }
+  State{ context },
+  world_{ context }
 { }
 
-void GameState::update(const sf::Time &)
+void GameState::handleEvent(const sf::Event & event)
 {
-  
+  world_.handleEvent(event);
 }
 
-void GameState::handleEvent(const sf::Event &)
-{
 
+void GameState::update(const sf::Time & dt)
+{
+  world_.update(dt);
 }
 
 void GameState::render() const
 {
   context_.window.clear();
+
+  world_.render(context_.window);
 
   context_.window.display();
 }

@@ -1,6 +1,7 @@
 CC = g++
 CPPFLAGS = -Wall -Wextra -Werror -Wno-missing-field-initializers -Wold-style-cast -std=gnu++14
-SFMLFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+LIBS = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+DLIBS = -lsfml-graphics-d -lsfml-window-d -lsfml-system-d -lsfml-audio-d
 
 SDIR = src
 IDIR = inc
@@ -31,7 +32,11 @@ $(objects): $(ODIR)/%.o : $(SDIR)/%.cpp
 
 link:
 	$(if $(SILENT),,@echo [LINK] $(call objects))
-	@$(CC) $(call objects) -o $(TARGET) $(SFMLFLAGS)
+	@$(CC) $(call objects) -o $(TARGET) $(LIBS)
+
+debug:
+	$(if $(SILENT),,@echo [LINK] $(call objects))
+	@$(CC) $(call objects) -o $(TARGET) $(DLIBS)
 
 clean: 
 	rm -rf -f out

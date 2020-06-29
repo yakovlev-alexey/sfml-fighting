@@ -36,15 +36,6 @@ public:
     Right
   };
 
-  enum class Action
-  {
-    None,
-    MoveLeft,
-    MoveRight,
-    Jump,
-    Attack
-  };
-
   Character();
   virtual ~Character() = default;
 
@@ -52,6 +43,10 @@ public:
 
   State getState() const;
   void setState(State state);
+
+  float getHealth() const;
+  void damage(float damage, Direction direction);
+  float getDamage() const;
 
   bool getGrounded() const;
   void setGrounded(bool grounded);
@@ -63,6 +58,15 @@ public:
   virtual void update(const sf::Time & dt);
   
 protected:
+
+  enum class Action
+  {
+    None,
+    MoveLeft,
+    MoveRight,
+    Jump,
+    Attack
+  };
 
   void draw(sf::RenderTarget & target, sf::RenderStates states) const override;
 
@@ -76,6 +80,14 @@ protected:
   
   static const float HIT_DURATION;
   static const float ATTACK_DURATION;
+
+  static const float MAX_HEALTH;
+  static const float DAMAGE;
+
+  static const float HIT_FORCE;
+  static const float HIT_FORCE_UP;
+
+  float health_;
 
   sf::Clock hitClock_;
   sf::Clock attackClock_;

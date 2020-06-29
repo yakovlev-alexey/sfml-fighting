@@ -26,8 +26,8 @@ World::World(const State::context_t & context) :
     std::cerr << exc.what() << '\n';
   }
 
-  player_.setPosition(screenSize_.x - 150.0f, screenSize_.y - 100.0f);
-  opponent_.setPosition(150.0f, screenSize_.y - 100.0f);
+  player_.setPosition(screenSize_.x - 150.0f, screenSize_.y - 150.0f);
+  opponent_.setPosition(150.0f, screenSize_.y - 150.0f);
 }
 
 void World::handleEvent(const sf::Event & event)
@@ -51,6 +51,8 @@ void World::update(const sf::Time & dt)
 
   opponent_.moveVelocity();
   handleCollisions(opponent_);
+
+  handleInteraction(player_, opponent_);
 }
 
 void World::render(sf::RenderWindow & window) const
@@ -88,4 +90,24 @@ void World::handleCollisions(Character & character) const
   if (right > screenSize_.x) {
     character.setPosition(screenSize_.x - bb.width, bb.top);
   }
+}
+
+void World::handleInteraction(Character & char1, Character & char2) const
+{
+  Character::State s1 = char1.getState();
+  Character::State s2 = char2.getState();
+
+  if (s1 != Character::State::Attack && s2 != Character::State::Attack) {
+    return;
+  }
+
+  sf::FloatRect bb1 = char1.getBounds();
+  sf::FloatRect bb2 = char2.getBounds();
+
+  if (s1 == Character::State::Attack && bb1.intersects(bb2)) {
+    char2.damage(char1.getDamage(), ((bb2.left - bb1.left) > 0.0f) ? Character::Direction::Right : Character::Direction::Left);
+  } else if (s2 == Character::State::Attack && bb2.intersects(bb1)) {
+    char1.damage(char2.getDamage(), ((bb1.left - bb2.left) > 0.0f) ? Character::Direction::Right : Character::Direction::Left);
+  }
+
 }

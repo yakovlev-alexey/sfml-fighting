@@ -20,7 +20,7 @@ public:
   void handleEvent(const sf::Event & event) override;
   void update(const sf::Time & dt) override;
 private:
-  Player & player_;
+  const Player & player_;
 };
 
 #endif

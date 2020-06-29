@@ -47,7 +47,7 @@ Opponent::Opponent(TextureHolder & textures, Player & player) :
   }
 }
 
-void Opponent::handleEvent(const sf::Event & )
+void Opponent::handleEvent(const sf::Event &)
 { }
 
 void Opponent::update(const sf::Time & dt)

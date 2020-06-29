@@ -29,6 +29,7 @@ private:
 
   void handlePhysics(Character & character) const;
   void handleCollisions(Character & character) const;
+  void handleInteraction(Character & char1, Character & char2) const;
 
   static const float FLOOR_HEIGHT;
 

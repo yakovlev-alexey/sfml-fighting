@@ -7,17 +7,25 @@
 
 #include <util/lerp.hpp>
 
-const float Character::DOWNFORCE = 4.0f;
+const float Character::DOWNFORCE = 10.0f;
 const float Character::JUMPFORCE = -8.0f;
 
 const float Character::MOVEMENT_SPEED = 10.0f;
-const float Character::ACCELERATION = 8.0f;
+const float Character::ACCELERATION = 16.0f;
 
 const float Character::HIT_DURATION = 0.3f;
 const float Character::ATTACK_DURATION = 0.5f;
 
+const float Character::MAX_HEALTH = 100.0f;
+// TODO: randomozied damage
+const float Character::DAMAGE = 10.0f;
+
+const float Character::HIT_FORCE = 2.0f;
+const float Character::HIT_FORCE_UP = -2.0f;
+
 Character::Character() :
   Transformable{ },
+  health_{ MAX_HEALTH },
   hitClock_{ },
   attackClock_{ },
   character_{ },
@@ -51,7 +59,32 @@ void Character::setState(State state)
   state_ = state;
   if (state == State::Hit) {
     hitClock_.restart();
+    character_.setColor(sf::Color(255, 255, 255, 200));
+  } else if (state == State::Attack) {
+    attackClock_.restart();
   }
+}
+
+float Character::getHealth() const
+{
+  return health_;
+}
+
+void Character::damage(float damage, Direction direction)
+{
+  if (state_ == State::Hit) {
+    return;
+  }
+  
+  health_ -= damage;
+  velocity_.x = (direction == Direction::Right) ? HIT_FORCE : -HIT_FORCE;
+  velocity_.y = HIT_FORCE_UP;
+  setState(State::Hit);
+}
+
+float Character::getDamage() const
+{
+  return DAMAGE;
 }
 
 bool Character::getGrounded() const
@@ -74,11 +107,11 @@ void Character::reset()
   move(-velocity_);
 }
 
-
 void Character::update(const sf::Time & dt)
 {
-  if (state_ == State::Hit && hitClock_.getElapsedTime().asSeconds() > HIT_DURATION) {
+  if (state_ == State::Hit && isGrounded_ && hitClock_.getElapsedTime().asSeconds() > HIT_DURATION) {
     state_ = State::Idle;
+    character_.setColor(sf::Color(255, 255, 255, 255));
   }
 
   float dts = dt.asSeconds(); 

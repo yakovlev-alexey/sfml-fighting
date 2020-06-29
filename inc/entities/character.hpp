@@ -27,7 +27,8 @@ public:
     Move,
     Jump,
     Attack,
-    Hit
+    Hit,
+    Dead
   };
 
   enum class Direction
@@ -71,8 +72,10 @@ protected:
   void draw(sf::RenderTarget & target, sf::RenderStates states) const override;
 
   sf::Texture * getTexture() const;
+  void updateTexture();
 
   static const float DOWNFORCE;
+  static const float DOWNFORCE_ACCELERATION;
   static const float JUMPFORCE;
 
   static const float MOVEMENT_SPEED;
@@ -91,6 +94,7 @@ protected:
   float health_;
 
   sf::Clock hitClock_;
+  sf::Clock deathClock_;
   sf::Clock attackClock_;
 
   sf::Sprite character_;
@@ -109,6 +113,7 @@ protected:
     sf::Texture * jump;
     sf::Texture * attack;
     sf::Texture * hit;
+    sf::Texture * dead;
   } sprites_;
 };
 

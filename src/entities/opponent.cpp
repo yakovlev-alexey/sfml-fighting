@@ -47,6 +47,12 @@ Opponent::Opponent(TextureHolder & textures, Player & player) :
   } catch (std::runtime_error & exc) {
     std::cerr << exc.what() << '\n';
   }
+
+  try {
+    sprites_.dead = &textures.getOrLoad(Textures::OpponentDead, "data/textures/opponent/dead.png");
+  } catch (std::runtime_error & exc) {
+    std::cerr << exc.what() << '\n';
+  }
 }
 
 void Opponent::handleEvent(const sf::Event &)

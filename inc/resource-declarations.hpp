@@ -19,11 +19,13 @@ namespace Textures
     PlayerJump,
     PlayerAttack,
     PlayerHit,
+    PlayerDead,
     OpponentIdle,
     OpponentMove,
     OpponentJump,
     OpponentAttack,
-    OpponentHit
+    OpponentHit,
+    OpponentDead
   };
 }
 

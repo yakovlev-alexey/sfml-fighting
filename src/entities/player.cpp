@@ -18,7 +18,7 @@ Player::Player(TextureHolder & textures) :
   Character{ }
 { 
   try {
-    sprites_.idle = &textures.getOrLoad(Textures::PlayerIdle, "data/textures/player-idle.png");
+    sprites_.idle = &textures.getOrLoad(Textures::PlayerIdle, "data/textures/player/idle.png");
     character_.setTexture(*sprites_.idle);
     character_.setScale(2.0f, 2.0f);
   } catch (std::runtime_error & exc) {
@@ -26,25 +26,31 @@ Player::Player(TextureHolder & textures) :
   }
 
   try {
-    sprites_.move = &textures.getOrLoad(Textures::PlayerMove, "data/textures/player-move.png");
+    sprites_.move = &textures.getOrLoad(Textures::PlayerMove, "data/textures/player/move.png");
   } catch (std::runtime_error & exc) {
     std::cerr << exc.what() << '\n';
   }
 
   try {
-    sprites_.jump = &textures.getOrLoad(Textures::PlayerJump, "data/textures/player-jump.png");
+    sprites_.jump = &textures.getOrLoad(Textures::PlayerJump, "data/textures/player/jump.png");
   } catch (std::runtime_error & exc) {
     std::cerr << exc.what() << '\n';
   }
 
   try {
-    sprites_.attack = &textures.getOrLoad(Textures::PlayerAttack, "data/textures/player-attack.png");
+    sprites_.attack = &textures.getOrLoad(Textures::PlayerAttack, "data/textures/player/attack.png");
   } catch (std::runtime_error & exc) {
     std::cerr << exc.what() << '\n';
   }
 
   try {
-    sprites_.hit = &textures.getOrLoad(Textures::PlayerHit, "data/textures/player-hit.png");
+    sprites_.hit = &textures.getOrLoad(Textures::PlayerHit, "data/textures/player/hit.png");
+  } catch (std::runtime_error & exc) {
+    std::cerr << exc.what() << '\n';
+  }
+
+  try {
+    sprites_.dead = &textures.getOrLoad(Textures::PlayerDead, "data/textures/player/dead.png");
   } catch (std::runtime_error & exc) {
     std::cerr << exc.what() << '\n';
   }

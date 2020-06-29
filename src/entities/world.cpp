@@ -97,7 +97,8 @@ void World::handleInteraction(Character & char1, Character & char2) const
   Character::State s1 = char1.getState();
   Character::State s2 = char2.getState();
 
-  if (s1 != Character::State::Attack && s2 != Character::State::Attack) {
+  if (s1 != Character::State::Attack && s2 != Character::State::Attack
+      && s1 != Character::State::Dead && s2 != Character::State::Dead) {
     return;
   }
 

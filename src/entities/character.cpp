@@ -1,5 +1,8 @@
 #include <entities/character.hpp>
 
+#include <iostream>
+#include <list>
+
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
@@ -8,10 +11,11 @@
 #include <util/lerp.hpp>
 
 const float Character::DOWNFORCE = 10.0f;
-const float Character::JUMPFORCE = -8.0f;
+const float Character::DOWNFORCE_ACCELERATION = 4.0f;
+const float Character::JUMPFORCE = -20.0f;
 
-const float Character::MOVEMENT_SPEED = 10.0f;
-const float Character::ACCELERATION = 16.0f;
+const float Character::MOVEMENT_SPEED = 15.0f;
+const float Character::ACCELERATION = 2.0f;
 
 const float Character::HIT_DURATION = 0.5f;
 const float Character::ATTACK_DURATION = 0.3f;
@@ -58,7 +62,9 @@ Character::State Character::getState() const
 void Character::setState(State state)
 {
   state_ = state;
-  if (state == State::Hit) {
+  if (state == State::Dead) {
+    deathClock_.restart();
+  } else if (state == State::Hit) {
     hitClock_.restart();
     character_.setColor(sf::Color(255, 255, 255, 200));
   } else if (state == State::Attack) {
@@ -78,6 +84,12 @@ void Character::damage(float damage, Direction direction)
   }
 
   health_ -= damage;
+
+  if (health_ <= 0.0f) {
+    setState(State::Dead);
+    return;
+  }
+
   velocity_.x = (direction == Direction::Right) ? HIT_FORCE : -HIT_FORCE;
   velocity_.y = HIT_FORCE_UP;
   setState(State::Hit);
@@ -117,13 +129,13 @@ void Character::update(const sf::Time & dt)
 
   float dts = dt.asSeconds(); 
 
-  if (state_ == State::Hit) {
-    while (!actions_.empty()) {
-      actions_.pop_front();
-    }
+  if (state_ == State::Hit || state_ == State::Dead) {
+    actions_ = std::list<Action>();
 
     velocity_.x = util::lerp(velocity_.x, 0, dts * ACCELERATION);
-    velocity_.y = util::lerp(velocity_.y, DOWNFORCE, dts);
+    velocity_.y = util::lerp(velocity_.y, DOWNFORCE, dts * DOWNFORCE_ACCELERATION);
+
+    updateTexture();
 
     return;
   }
@@ -161,7 +173,7 @@ void Character::update(const sf::Time & dt)
   }
 
   velocity_.x = util::lerp(velocity_.x, 0, dts * ACCELERATION);
-  velocity_.y = util::lerp(velocity_.y, DOWNFORCE, dts);
+  velocity_.y = util::lerp(velocity_.y, DOWNFORCE, dts * DOWNFORCE_ACCELERATION);
 
   float idleError = 1e-2f;
 
@@ -175,6 +187,35 @@ void Character::update(const sf::Time & dt)
     state_ = State::Idle;
   }
 
+  updateTexture();
+}
+  
+void Character::draw(sf::RenderTarget & target, sf::RenderStates states) const
+{
+  states.transform *= getTransform();
+
+  target.draw(character_, states);
+}
+
+sf::Texture * Character::getTexture() const
+{
+  if (state_ == State::Dead) {
+    return sprites_.dead;
+  } else if (state_ == State::Hit) {
+    return sprites_.hit;
+  } else if (state_ == State::Attack) {
+    return sprites_.attack;
+  } else if (state_ == State::Jump) {
+    return sprites_.jump;
+  } else if (state_ == State::Move) {
+    return sprites_.move;
+  } else {
+    return sprites_.idle;
+  }
+}
+
+void Character::updateTexture()
+{
   sf::IntRect tr = character_.getTextureRect();
 
   sf::Texture * tx = getTexture();
@@ -193,28 +234,5 @@ void Character::update(const sf::Time & dt)
   } else if (velocity_.x >= 0.0f && direction_ == Direction::Left) {
     direction_ = Direction::Right;
     character_.setTextureRect({ 0, 0, tr.left, tr.height });
-  }
-}
-  
-
-void Character::draw(sf::RenderTarget & target, sf::RenderStates states) const
-{
-  states.transform *= getTransform();
-
-  target.draw(character_, states);
-}
-
-sf::Texture * Character::getTexture() const
-{
-  if (state_ == State::Hit) {
-    return sprites_.hit;
-  } else if (state_ == State::Attack) {
-    return sprites_.attack;
-  } else if (state_ == State::Jump) {
-    return sprites_.jump;
-  } else if (state_ == State::Move) {
-    return sprites_.move;
-  } else {
-    return sprites_.idle;
   }
 }

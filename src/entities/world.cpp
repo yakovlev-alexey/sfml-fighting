@@ -9,7 +9,9 @@
 
 #include <resource-holder.hpp>
 #include <entities/character.hpp>
+#include <states/state-manager.hpp>
 #include <resource-declarations.hpp>
+#include <states/state-declarations.hpp>
 
 const float World::FLOOR_HEIGHT = 50.0f;
 
@@ -53,6 +55,13 @@ void World::update(const sf::Time & dt)
   handleCollisions(opponent_);
 
   handleInteraction(player_, opponent_);
+
+  // TODO: gameover screen
+  if (opponent_.isDead()) {
+    StateManager::getInstance().queueChange(States::Menu);
+  } else if (player_.isDead()) {
+    StateManager::getInstance().queueChange(States::Menu);
+  }
 }
 
 void World::render(sf::RenderWindow & window) const

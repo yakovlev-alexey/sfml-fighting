@@ -24,6 +24,7 @@ const float Character::ATTACK_COOLDOWN = 0.9f;
 const float Character::MAX_HEALTH = 100.0f;
 // TODO: randomozied damage
 const float Character::DAMAGE = 10.0f;
+const float Character::DEATH_DURATION = 1.5f;
 
 const float Character::HIT_FORCE = 2.0f;
 const float Character::HIT_FORCE_UP = -2.0f;
@@ -98,6 +99,11 @@ void Character::damage(float damage, Direction direction)
 float Character::getDamage() const
 {
   return DAMAGE;
+}
+
+bool Character::isDead() const
+{
+  return (health_ < 0) && (deathClock_.getElapsedTime().asSeconds() > DEATH_DURATION);
 }
 
 bool Character::getGrounded() const

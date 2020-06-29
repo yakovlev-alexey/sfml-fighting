@@ -60,7 +60,6 @@ void Opponent::handleEvent(const sf::Event &)
 
 void Opponent::update(const sf::Time & dt)
 {
-  // TODO: queue actions
   sf::Vector2f pp = player_.getPosition();
   sf::Vector2f op = getPosition();
 

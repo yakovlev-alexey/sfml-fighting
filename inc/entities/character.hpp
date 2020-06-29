@@ -49,6 +49,8 @@ public:
   void damage(float damage, Direction direction);
   float getDamage() const;
 
+  bool isDead() const;
+
   bool getGrounded() const;
   void setGrounded(bool grounded);
 
@@ -87,6 +89,7 @@ protected:
 
   static const float MAX_HEALTH;
   static const float DAMAGE;
+  static const float DEATH_DURATION;
 
   static const float HIT_FORCE;
   static const float HIT_FORCE_UP;

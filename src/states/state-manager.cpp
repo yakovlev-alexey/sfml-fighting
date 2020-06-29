@@ -44,6 +44,9 @@ void StateManager::render()
 {
   if (queued_ != States::None) {
     switch (queued_) {
+      case States::Menu:
+        state_ = std::make_unique<MenuState>(context_);
+        break;
       case States::Game:
         state_ = std::make_unique<GameState>(context_);
         break;

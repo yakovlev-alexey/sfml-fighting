@@ -10,6 +10,8 @@
 #include <resource-holder.hpp>
 #include <resource-declarations.hpp>
 
+const float Opponent::ATTACK_OPPONENT_COOLDOWN = 3.5f;
+
 Opponent::Opponent(TextureHolder & textures, Player & player) :
   Character{ },
   player_{ player }
@@ -53,5 +55,28 @@ void Opponent::handleEvent(const sf::Event &)
 void Opponent::update(const sf::Time & dt)
 {
   // TODO: queue actions
+  sf::Vector2f pp = player_.getPosition();
+  sf::Vector2f op = getPosition();
+
+  float proximity = 100.0f;
+
+  if ((pp.x - op.x) > proximity) {
+    actions_.push_back(Action::MoveRight);
+  } else if ((pp.x - op.x) < -proximity) {
+    actions_.push_back(Action::MoveLeft);
+  } 
+
+  float verticalProximity = 100.0f;
+  
+  if ((op.y - pp.y) > verticalProximity) {
+    actions_.push_back(Action::Jump);
+  }
+
+  float reach = 120.0f;
+
+  if ((std::abs(pp.x - op.x) < reach) && (attackClock_.getElapsedTime().asSeconds() > ATTACK_OPPONENT_COOLDOWN)) {
+    actions_.push_back(Action::Attack);
+  }
+ 
   Character::update(dt);
 }

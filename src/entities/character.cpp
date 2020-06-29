@@ -13,8 +13,9 @@ const float Character::JUMPFORCE = -8.0f;
 const float Character::MOVEMENT_SPEED = 10.0f;
 const float Character::ACCELERATION = 16.0f;
 
-const float Character::HIT_DURATION = 0.3f;
-const float Character::ATTACK_DURATION = 0.5f;
+const float Character::HIT_DURATION = 0.5f;
+const float Character::ATTACK_DURATION = 0.3f;
+const float Character::ATTACK_COOLDOWN = 0.9f;
 
 const float Character::MAX_HEALTH = 100.0f;
 // TODO: randomozied damage
@@ -75,7 +76,7 @@ void Character::damage(float damage, Direction direction)
   if (state_ == State::Hit) {
     return;
   }
-  
+
   health_ -= damage;
   velocity_.x = (direction == Direction::Right) ? HIT_FORCE : -HIT_FORCE;
   velocity_.y = HIT_FORCE_UP;
@@ -148,7 +149,7 @@ void Character::update(const sf::Time & dt)
         }
         break;
       case Action::Attack:
-        if (!attack) {
+        if (!attack && attackClock_.getElapsedTime().asSeconds() > ATTACK_COOLDOWN) {
           attackClock_.restart();
           attack = true;
         }

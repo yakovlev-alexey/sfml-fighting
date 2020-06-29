@@ -80,6 +80,7 @@ protected:
   
   static const float HIT_DURATION;
   static const float ATTACK_DURATION;
+  static const float ATTACK_COOLDOWN;
 
   static const float MAX_HEALTH;
   static const float DAMAGE;

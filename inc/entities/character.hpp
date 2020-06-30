@@ -76,6 +76,8 @@ protected:
   sf::Texture * getTexture() const;
   void updateTexture();
 
+  void updatePhysics(float dts);
+
   static const float DOWNFORCE;
   static const float DOWNFORCE_ACCELERATION;
   static const float JUMPFORCE;

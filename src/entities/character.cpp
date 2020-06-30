@@ -15,7 +15,7 @@ const float Character::DOWNFORCE_ACCELERATION = 4.0f;
 const float Character::JUMPFORCE = -20.0f;
 
 const float Character::MOVEMENT_SPEED = 15.0f;
-const float Character::ACCELERATION = 2.0f;
+const float Character::ACCELERATION = 6.0f;
 
 const float Character::HIT_DURATION = 0.5f;
 const float Character::ATTACK_DURATION = 0.3f;
@@ -26,8 +26,8 @@ const float Character::MAX_HEALTH = 100.0f;
 const float Character::DAMAGE = 10.0f;
 const float Character::DEATH_DURATION = 1.5f;
 
-const float Character::HIT_FORCE = 2.0f;
-const float Character::HIT_FORCE_UP = -2.0f;
+const float Character::HIT_FORCE = 6.0f;
+const float Character::HIT_FORCE_UP = -4.0f;
 
 Character::Character() :
   Transformable{ },
@@ -131,6 +131,7 @@ void Character::update(const sf::Time & dt)
   if (state_ == State::Hit && isGrounded_ && hitClock_.getElapsedTime().asSeconds() > HIT_DURATION) {
     state_ = State::Idle;
     character_.setColor(sf::Color(255, 255, 255, 255));
+    velocity_.x = -velocity_.x;
   }
 
   float dts = dt.asSeconds(); 
@@ -138,8 +139,7 @@ void Character::update(const sf::Time & dt)
   if (state_ == State::Hit || state_ == State::Dead) {
     actions_ = std::list<Action>();
 
-    velocity_.x = util::lerp(velocity_.x, 0, dts * ACCELERATION);
-    velocity_.y = util::lerp(velocity_.y, DOWNFORCE, dts * DOWNFORCE_ACCELERATION);
+    updatePhysics(dts);
 
     updateTexture();
 
@@ -178,8 +178,7 @@ void Character::update(const sf::Time & dt)
     actions_.pop_front();
   }
 
-  velocity_.x = util::lerp(velocity_.x, 0, dts * ACCELERATION);
-  velocity_.y = util::lerp(velocity_.y, DOWNFORCE, dts * DOWNFORCE_ACCELERATION);
+  updatePhysics(dts);
 
   float idleError = 1e-2f;
 
@@ -241,4 +240,10 @@ void Character::updateTexture()
     direction_ = Direction::Right;
     character_.setTextureRect({ 0, 0, tr.left, tr.height });
   }
+}
+
+void Character::updatePhysics(float dts)
+{
+  velocity_.x = util::lerp(velocity_.x, 0, dts * ACCELERATION);
+  velocity_.y = util::lerp(velocity_.y, DOWNFORCE, dts * DOWNFORCE_ACCELERATION);
 }

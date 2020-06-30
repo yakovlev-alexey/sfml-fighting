@@ -66,6 +66,7 @@ void World::update(const sf::Time & dt)
 
 void World::render(sf::RenderWindow & window) const
 {
+  // TODO: interface and pause menu
   window.draw(bg_);
   window.draw(opponent_);
   window.draw(player_);
@@ -119,5 +120,4 @@ void World::handleInteraction(Character & char1, Character & char2) const
   } else if (s2 == Character::State::Attack && bb2.intersects(bb1)) {
     char1.damage(char2.getDamage(), ((bb1.left - bb2.left) > 0.0f) ? Character::Direction::Right : Character::Direction::Left);
   }
-
 }

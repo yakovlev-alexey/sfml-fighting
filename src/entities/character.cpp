@@ -1,6 +1,5 @@
 #include <entities/character.hpp>
 
-#include <iostream>
 #include <list>
 
 #include <SFML/Graphics/Sprite.hpp>
@@ -9,6 +8,7 @@
 #include <SFML/Graphics/RenderStates.hpp>
 
 #include <util/lerp.hpp>
+#include <util/random.hpp>
 
 const float Character::DOWNFORCE = 10.0f;
 const float Character::DOWNFORCE_ACCELERATION = 4.0f;
@@ -20,11 +20,15 @@ const float Character::ACCELERATION = 6.0f;
 const float Character::HIT_DURATION = 0.5f;
 const float Character::ATTACK_DURATION = 0.3f;
 const float Character::ATTACK_COOLDOWN = 0.9f;
+const float Character::ATTACK_FALLOFF = 0.25f;
 
 const float Character::MAX_HEALTH = 100.0f;
-// TODO: randomozied damage
-const float Character::DAMAGE = 10.0f;
 const float Character::DEATH_DURATION = 1.5f;
+
+const float Character::MIN_DAMAGE = 5.0f;
+const float Character::MAX_DAMAGE = 7.75f;
+const float Character::FALLING_MODIFIER = 1.35f;
+const float Character::FALLING_THRESHOLD = 0.5f;
 
 const float Character::HIT_FORCE = 6.0f;
 const float Character::HIT_FORCE_UP = -4.0f;
@@ -34,6 +38,7 @@ Character::Character() :
   health_{ MAX_HEALTH },
   hitClock_{ },
   attackClock_{ },
+  damageModifier_{ 1.0f },
   character_{ },
   velocity_{ 0.0f, 0.0f },
   actions_{ },
@@ -75,7 +80,12 @@ void Character::setState(State state)
 
 float Character::getHealth() const
 {
-  return health_;
+  return (health_ < 0.0f) ? 0.0f : health_;
+}
+
+float Character::getMaxHealth()
+{
+  return MAX_HEALTH;
 }
 
 void Character::damage(float damage, Direction direction)
@@ -98,7 +108,21 @@ void Character::damage(float damage, Direction direction)
 
 float Character::getDamage() const
 {
-  return DAMAGE;
+  util::FloatGenerator floatGen = { };
+
+  float damage = floatGen.get(MIN_DAMAGE, MAX_DAMAGE);
+
+  // Increased damage when falling
+  if (!isGrounded_ && velocity_.y > FALLING_THRESHOLD) {
+    damage *= FALLING_MODIFIER;
+  }
+
+  // Spamming attacks leads to smaller damage
+  if (damageModifier_ < 1.0f) {
+    damage *= damageModifier_;
+  }
+
+  return damage;
 }
 
 bool Character::isDead() const
@@ -168,7 +192,8 @@ void Character::update(const sf::Time & dt)
         break;
       case Action::Attack:
         if (!attack && attackClock_.getElapsedTime().asSeconds() > ATTACK_COOLDOWN) {
-          attackClock_.restart();
+          damageModifier_ = (attackClock_.restart().asSeconds()
+              - ATTACK_COOLDOWN) / ATTACK_FALLOFF;
           attack = true;
         }
         break;

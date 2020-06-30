@@ -46,6 +46,8 @@ public:
   void setState(State state);
 
   float getHealth() const;
+  static float getMaxHealth();
+
   void damage(float damage, Direction direction);
   float getDamage() const;
 
@@ -88,10 +90,15 @@ protected:
   static const float HIT_DURATION;
   static const float ATTACK_DURATION;
   static const float ATTACK_COOLDOWN;
+  static const float ATTACK_FALLOFF;
 
   static const float MAX_HEALTH;
-  static const float DAMAGE;
   static const float DEATH_DURATION;
+
+  static const float MIN_DAMAGE;
+  static const float MAX_DAMAGE;
+  static const float FALLING_MODIFIER;
+  static const float FALLING_THRESHOLD;
 
   static const float HIT_FORCE;
   static const float HIT_FORCE_UP;
@@ -101,6 +108,8 @@ protected:
   sf::Clock hitClock_;
   sf::Clock deathClock_;
   sf::Clock attackClock_;
+
+  float damageModifier_;
 
   sf::Sprite character_;
   sf::Vector2f velocity_;

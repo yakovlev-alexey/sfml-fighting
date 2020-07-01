@@ -205,15 +205,16 @@ void World::updateTimer()
 {
   float tss = clock_.getElapsedTime().asSeconds();
   
-  if (player_.isDead()) {
+  if (player_.getHealth() == 0.0f) {
     timer_.setString("OPPONENT WINS!");
-  } else if (opponent_.isDead()) {
+  } else if (opponent_.getHealth() == 0.0f) {
     timer_.setString("PLAYER WINS!");
   } else if (tss > 1.0f) {
     timer_.setString(std::to_string(static_cast<int>(tss)));
   } else {
     timer_.setString("FIGHT!");
   }
+
   sf::FloatRect bb = timer_.getLocalBounds();
   timer_.setOrigin(bb.left + bb.width / 2.0f, bb.top + bb.height / 2.0f);
 }
